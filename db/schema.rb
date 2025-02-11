@@ -10,27 +10,32 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_02_04_220727) do
+ActiveRecord::Schema[7.2].define(version: 2025_02_11_212532) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "products", force: :cascade do |t|
+    t.string "name"
+    t.text "description"
+    t.integer "price"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "sale_details", force: :cascade do |t|
+    t.bigint "product_id", null: false
+    t.bigint "sale_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["product_id"], name: "index_sale_details_on_product_id"
+    t.index ["sale_id"], name: "index_sale_details_on_sale_id"
   end
 
   create_table "sales", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-  end
-
-  create_table "sales_details", force: :cascade do |t|
-    t.bigint "product_id", null: false
-    t.bigint "sale_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["product_id"], name: "index_sales_details_on_product_id"
-    t.index ["sale_id"], name: "index_sales_details_on_sale_id"
+    t.date "date"
+    t.integer "total"
   end
 
   create_table "users", force: :cascade do |t|
@@ -45,6 +50,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_04_220727) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  add_foreign_key "sales_details", "products"
-  add_foreign_key "sales_details", "sales"
+  add_foreign_key "sale_details", "products"
+  add_foreign_key "sale_details", "sales"
 end

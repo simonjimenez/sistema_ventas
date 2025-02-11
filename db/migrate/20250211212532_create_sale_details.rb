@@ -1,6 +1,6 @@
-class CreateSalesDetails < ActiveRecord::Migration[7.2]
+class CreateSaleDetails < ActiveRecord::Migration[7.2]
   def change
-    create_table :sales_details do |t|
+    create_table :sale_details do |t|
       t.references :product, null: false, foreign_key: true
       t.references :sale, null: false, foreign_key: true
 
